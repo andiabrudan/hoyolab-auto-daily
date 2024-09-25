@@ -8,6 +8,9 @@ on:
 jobs:
   check-in:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cookie-name: [COOKIE1, COOKIE2]
     steps:
       - name: Clone Repo
         uses: actions/checkout@v4
@@ -20,6 +23,6 @@ jobs:
       - name: Check In
         run: node index.js ${{ vars.GAMES }}
         env:
-          COOKIE: ${{ secrets.COOKIE }}
+          COOKIE: ${{ secrets[matrix.cookie-name] }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           DISCORD_USER: ${{ secrets.DISCORD_USER }}
